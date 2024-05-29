@@ -1,5 +1,5 @@
 import axios from "axios"
-import { AddressProps, TerraProps } from "pages/types"
+import { AddressProps, FormProps } from "pages/Home/types"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { maskCepNumber, maskLoteNumber } from "utils/mask/mask"
@@ -72,7 +72,7 @@ export const useCadastro = ({onCadastroSuccess}:Props) => {
     }, [lote])
 
     const apikey = 'AIzaSyDAJ40ypx302SUKYMrry1NYS6P3jWAo9P8'
-    const BuscaCoordenadas = async (data: TerraProps) => {
+    const BuscaCoordenadas = async (data: FormProps) => {
         setLoadingCoordendas(true)
         let EnderecoCompleto = `${data.logradouro}, ${data.numero}- ${data.bairro}, ${data.cidade}- ${data.estado}`;
         try {
@@ -100,12 +100,12 @@ export const useCadastro = ({onCadastroSuccess}:Props) => {
         return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== ''));
     };
 
-    const onSubmit = async (data: TerraProps) => {
+    const onSubmit = async (data: FormProps) => {
 
         const filteredData = removeEmptyProperties(data);
 
         const cadastros = localStorage.getItem('cadastros');
-        let cadastrosParse: TerraProps[] = cadastros ? JSON.parse(cadastros) : [];
+        let cadastrosParse: FormProps[] = cadastros ? JSON.parse(cadastros) : [];
         if (filteredData.cep) {
             const response = await BuscaCoordenadas(filteredData);
             filteredData.coordenadasX = response?.CoordenadasX;
@@ -114,7 +114,7 @@ export const useCadastro = ({onCadastroSuccess}:Props) => {
         let id = 0;
         if (cadastros) {
             id = cadastrosParse.length;
-            cadastrosParse.map((cadastro: TerraProps) => {
+            cadastrosParse.map((cadastro: FormProps) => {
                 if (cadastro.id === id) id += 1;
             });
             filteredData.id = id;

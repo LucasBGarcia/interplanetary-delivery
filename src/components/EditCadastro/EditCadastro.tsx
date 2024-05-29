@@ -1,19 +1,7 @@
-import { useCadastro } from "pages/Home/useCadastro";
+import { FormProps, useEditCadastro } from "pages";
 import { useState } from "react";
-import { useForm } from "react-hook-form"
 
-type CadastroSuccessCallback = () => void;
-
-interface Props {
-    onCadastroSuccess: CadastroSuccessCallback; // Propriedade onCadastroSuccess do tipo CadastroSuccessCallback
-}
-
-export function FormCadastro({onCadastroSuccess}:Props) {
-    const [Terra, setTerra] = useState<boolean>(true)
-
-    // const { ErroViaCep, ErroCoordenadas, errors, onSubmit, register, handleSubmit, LoadingCoordendas } = useCadastro()
-    // const { errors, onSubmit, register, handleSubmit } = useMarte()
-
+export function EditCadastro({ dados }: { dados: FormProps | undefined }) {
     const {
         ErroViaCep,
         ErroCoordenadas,
@@ -22,26 +10,16 @@ export function FormCadastro({onCadastroSuccess}:Props) {
         register,
         handleSubmit,
         LoadingCoordendas
-    } = useCadastro({onCadastroSuccess});
-
+    } = useEditCadastro(dados);
 
     return (
         <div className=" flex flex-col flex-1 p-4  rounded-md border-gray-950 gap-3">
             <div>
-                <p className="text-2xl font-bold">Cadastro de endereços</p>
+                <p className="text-2xl font-bold">Edição de endereço</p>
             </div>
-            <div className="flex mt-4 space-x-4">
-                <label className="flex items-center">
-                    <input type="radio" name="endereco" className="form-radio h-5 w-5 text-gray-600" checked={Terra} onChange={() => setTerra(true)} />
-                    <span className="ml-2  text-gray-700">Terra</span>
-                </label>
-                <label className="flex items-center ">
-                    <input type="radio" name="endereco" className="form-radio h-5 w-5 text-gray-600" onChange={() => setTerra(false)} />
-                    <span className="ml-2 text-gray-700">Marte</span>
-                </label>
-            </div>
+            
             <div>
-                {Terra ?
+                {!dados?.lote ?
                     <div className="gap-4 grid grid-cols-2">
                         <div className="form-group">
                             <div className="flex flex-col">
