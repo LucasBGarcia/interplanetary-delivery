@@ -1,10 +1,10 @@
 import axios from "axios"
-import { AddressProps, CooProps } from "pages/types"
+import { AddressProps, TerraProps } from "pages/types"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { maskCepNumber } from "utils/images/mask/mask"
+import { maskCepNumber, maskLoteNumber } from "utils/mask/mask"
 
-export const useEndereco = () => {
+export const useTerra = () => {
     const [ErroViaCep, setErroViaCep] = useState<string>('')
     const [ErroCoordenadas, setErroCoordenadas] = useState<string>('')
     const [LoadingCoordendas, setLoadingCoordendas] = useState<boolean>(false)
@@ -13,6 +13,7 @@ export const useEndereco = () => {
         handleSubmit,
         watch,
         setValue,
+        reset,
         formState: { errors }
     } = useForm(({
         defaultValues: {
@@ -23,7 +24,8 @@ export const useEndereco = () => {
             numero: '',
             bairro: '',
             complemento: '',
-            pais: ''
+            pais: '',
+            lote: ''
         }
     }))
 
@@ -47,6 +49,7 @@ export const useEndereco = () => {
     }, []);
 
     const cep = watch('cep')
+    const lote = watch('lote')
     const pais = watch('pais')
 
     useEffect(() => {
@@ -58,9 +61,12 @@ export const useEndereco = () => {
         }
     }, [BuscaEndereco, cep, setValue, pais])
 
+    useEffect(() => {
+        setValue('lote', maskLoteNumber(lote))
+    }, [lote])
 
     const apikey = 'AIzaSyDAJ40ypx302SUKYMrry1NYS6P3jWAo9P8'
-    const BuscaCoordenadas = async (data: CooProps) => {
+    const BuscaCoordenadas = async (data: TerraProps) => {
         setLoadingCoordendas(true)
         let EnderecoCompleto = `${data.logradouro}, ${data.numero}- ${data.bairro}, ${data.cidade}- ${data.estado}`;
         try {
@@ -84,30 +90,51 @@ export const useEndereco = () => {
         }
 
     }
+    const removeEmptyProperties = (obj: object) => {
+        return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== ''));
+    };
 
-    const onSubmit = async (data: CooProps) => {
+    const onSubmit = async (data: TerraProps) => {
+
+        const filteredData = removeEmptyProperties(data);
+
         const cadastros = localStorage.getItem('cadastros');
-        let cadastrosParse: CooProps[] = cadastros ? JSON.parse(cadastros) : [];
-        const response = await BuscaCoordenadas(data);
-        data.coordenadasX = response?.CoordenadasX
-        data.coordenadasY = response?.CoordenadasY
-        let id = 0
-        if (cadastros) {
-            id = cadastrosParse.length
-            cadastrosParse.map((cadastro: CooProps) => {
-                if (cadastro.id === id) id += 1
-            })
-            data.id = id
-            cadastrosParse.push(data)
-            localStorage.setItem('cadastros', JSON.stringify(cadastrosParse))
-        } else {
-            id = 1
-            data.id = id
-            cadastrosParse.push(data)
-            localStorage.setItem('cadastros', JSON.stringify(cadastrosParse))
+        let cadastrosParse: TerraProps[] = cadastros ? JSON.parse(cadastros) : [];
+        if (filteredData.cep) {
+            const response = await BuscaCoordenadas(filteredData);
+            filteredData.coordenadasX = response?.CoordenadasX;
+            filteredData.coordenadasY = response?.CoordenadasY;
         }
-    }
+        let id = 0;
+        if (cadastros) {
+            id = cadastrosParse.length;
+            cadastrosParse.map((cadastro: TerraProps) => {
+                if (cadastro.id === id) id += 1;
+            });
+            filteredData.id = id;
+            cadastrosParse.push(filteredData);
+            localStorage.setItem('cadastros', JSON.stringify(cadastrosParse));
+        } else {
+            id = 1;
+            filteredData.id = id;
+            cadastrosParse.push(filteredData);
+            localStorage.setItem('cadastros', JSON.stringify(cadastrosParse));
+        }
 
+        reset({
+            cep: '',
+            cidade: '',
+            estado: '',
+            logradouro: '',
+            numero: '',
+            bairro: '',
+            complemento: '',
+            pais: '',
+            lote: ''
+        });
+
+        console.log(cadastrosParse);
+    };
     return {
         errors,
         ErroViaCep,

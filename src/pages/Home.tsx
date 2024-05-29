@@ -1,18 +1,34 @@
-import axios from "axios";
 import { Navbar } from "components";
-import { AddressProps } from "pages/types";
-import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { maskCepNumber } from "utils/images/mask/mask";
+import { useTerra } from "pages/useTerra";
+import { useState } from "react";
 import planeta_terra from "../utils/images/planeta_terra.jpg";
-import { useEndereco } from "pages/useEndereco";
 
 export function HomePage() {
     const [Terra, setTerra] = useState<boolean>(true)
 
-    const { ErroViaCep, ErroCoordenadas,errors, onSubmit, register, handleSubmit, LoadingCoordendas } = useEndereco()
+    // const { ErroViaCep, ErroCoordenadas, errors, onSubmit, register, handleSubmit, LoadingCoordendas } = useTerra()
+    // const { errors, onSubmit, register, handleSubmit } = useMarte()
+
+    const {
+        ErroViaCep,
+        ErroCoordenadas,
+        errors,
+        onSubmit,
+        register,
+        handleSubmit,
+        LoadingCoordendas
+    } = useTerra();
+
+    // const {
+    //     errors: marteErrors,
+    //     onSubmit: marteOnSubmit,
+    //     register: marteRegister,
+    //     handleSubmit: marteHandleSubmit,
+    //     MarteSalvando
+    // } = useMarte();
+
     return (
-        <>
+        <div className="h-screen">
             <Navbar />
             <div className="w-full">
                 <img
@@ -21,9 +37,9 @@ export function HomePage() {
                     className="w-full h-16 object-cover"
                 />
             </div>
-            <div className="container mx-auto h-screen p-4">
-                <div className="flex flex-col md:flex-row h-screen gap-3">
-                    <div className=" flex flex-col flex-1 p-4 bg-gray-200 border-2 rounded-md border-gray-950 gap-3">
+            <div className="container mx-auto  p-4">
+                <div className="flex flex-col md:flex-row gap-3">
+                    <div className=" flex flex-col flex-1 p-4 border-2 rounded-md border-gray-950 gap-3">
                         <div>
                             <p className="text-2xl font-bold">Cadastro de endereços</p>
                         </div>
@@ -156,7 +172,50 @@ export function HomePage() {
                                     )}
                                 </div>
                                 :
-                                null
+                                <div className="gap-4 grid grid-cols-2">
+                                    <div className="form-group">
+                                        <div className="flex flex-col">
+                                            <label>Número do Lote</label>
+                                            <input
+                                                type="text"
+                                                className="border-black border-2 rounded-md w-full pl-2"
+                                                {...register('lote', { required: true, maxLength: 4, minLength: 4 })}
+                                            />
+                                            {errors?.lote?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
+
+                                        </div>
+                                    </div>
+                                    {LoadingCoordendas ? (
+                                        <button
+                                            className="py-2 px-4 rounded-md bg-primary font-bold text-white justify-center flex items-center col-span-2"
+                                            disabled
+                                        >
+                                            <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                                                <circle
+                                                    className="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="4"
+                                                ></circle>
+                                                <path
+                                                    className="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                ></path>
+                                            </svg>
+                                            Enviando...
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="py-2 px-4 rounded-md bg-primary font-bold text-white col-span-2"
+                                            onClick={handleSubmit(onSubmit)}
+                                        >
+                                            Enviar
+                                        </button>
+                                    )}
+                                </div>
                             }
                         </div>
                     </div>
@@ -165,6 +224,6 @@ export function HomePage() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
