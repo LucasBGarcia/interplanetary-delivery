@@ -8,8 +8,7 @@ export const useEndereco = () => {
     const [ErroViaCep, setErroViaCep] = useState<string>('')
     const [ErroCoordenadas, setErroCoordenadas] = useState<string>('')
     const [LoadingCoordendas, setLoadingCoordendas] = useState<boolean>(false)
-    const [CoordenadasXInput, setCoordenadasXInput] = useState<string>('');
-    const [CoordenadasYInput, setCoordenadasYInput] = useState<string>('');
+
     const { register,
         handleSubmit,
         watch,
@@ -69,31 +68,44 @@ export const useEndereco = () => {
                 `https://maps.googleapis.com/maps/api/geocode/json?address=${EnderecoCompleto}&key=${apikey}`
             );
             const data = response.data;
-            console.log('ta caindo aqui', data)
-
             if (data.results.length > 0) {
                 const location = data.results[0].geometry?.location;
                 if (location) {
-                    setCoordenadasXInput(location.lat.toString());
-                    setCoordenadasYInput(location.lng.toString());
-                    console.log('lat', location.lat.toString())
-                    console.log('lng', location.lng.toString())
                     setLoadingCoordendas(false)
-                    return;
+                    return {
+                        CoordenadasX: location.lat.toString(),
+                        CoordenadasY: location.lng.toString(),
+                    }
                 }
             }
         } catch (error) {
             setLoadingCoordendas(false)
             setErroCoordenadas('Erro ao encontrar as coordenadas, por favor, verifique o endereço!')
-            setCoordenadasXInput('');
-            setCoordenadasYInput('');
         }
 
     }
 
-    const onSubmit = (data: CooProps) => {
-        BuscaCoordenadas(data)
-        console.log(data)
+    const onSubmit = async (data: CooProps) => {
+        const cadastros = localStorage.getItem('cadastros');
+        let cadastrosParse: CooProps[] = cadastros ? JSON.parse(cadastros) : [];
+        const response = await BuscaCoordenadas(data);
+        data.coordenadasX = response?.CoordenadasX
+        data.coordenadasY = response?.CoordenadasY
+        let id = 0
+        if (cadastros) {
+            id = cadastrosParse.length
+            cadastrosParse.map((cadastro: CooProps) => {
+                if (cadastro.id === id) id += 1
+            })
+            data.id = id
+            cadastrosParse.push(data)
+            localStorage.setItem('cadastros', JSON.stringify(cadastrosParse))
+        } else {
+            id = 1
+            data.id = id
+            cadastrosParse.push(data)
+            localStorage.setItem('cadastros', JSON.stringify(cadastrosParse))
+        }
     }
 
     return {

@@ -9,6 +9,7 @@ export type AddressProps = {
 
 
 export type CooProps = {
+    id?:number,
     cep: string,
     cidade: string,
     estado: string,
@@ -16,7 +17,9 @@ export type CooProps = {
     numero: string,
     bairro: string,
     complemento: string,
-    pais: string
+    pais: string,
+    coordenadasX?:string,
+    coordenadasY?:string
 }
 
 
