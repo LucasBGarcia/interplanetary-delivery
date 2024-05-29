@@ -2,7 +2,13 @@ import { useCadastro } from "pages/useCadastro";
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 
-export function FormCadastro() {
+type CadastroSuccessCallback = () => void;
+
+interface Props {
+    onCadastroSuccess: CadastroSuccessCallback; // Propriedade onCadastroSuccess do tipo CadastroSuccessCallback
+}
+
+export function FormCadastro({onCadastroSuccess}:Props) {
     const [Terra, setTerra] = useState<boolean>(true)
 
     // const { ErroViaCep, ErroCoordenadas, errors, onSubmit, register, handleSubmit, LoadingCoordendas } = useCadastro()
@@ -16,7 +22,7 @@ export function FormCadastro() {
         register,
         handleSubmit,
         LoadingCoordendas
-    } = useCadastro();
+    } = useCadastro({onCadastroSuccess});
 
 
     return (

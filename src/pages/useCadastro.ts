@@ -4,7 +4,13 @@ import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { maskCepNumber, maskLoteNumber } from "utils/mask/mask"
 
-export const useCadastro = () => {
+type CadastroSuccessCallback = () => void;
+
+interface Props {
+    onCadastroSuccess: CadastroSuccessCallback; // Propriedade onCadastroSuccess do tipo CadastroSuccessCallback
+}
+
+export const useCadastro = ({onCadastroSuccess}:Props) => {
     const [ErroViaCep, setErroViaCep] = useState<string>('')
     const [ErroCoordenadas, setErroCoordenadas] = useState<string>('')
     const [LoadingCoordendas, setLoadingCoordendas] = useState<boolean>(false)
@@ -114,11 +120,13 @@ export const useCadastro = () => {
             filteredData.id = id;
             cadastrosParse.push(filteredData);
             localStorage.setItem('cadastros', JSON.stringify(cadastrosParse));
+            onCadastroSuccess()
         } else {
             id = 1;
             filteredData.id = id;
             cadastrosParse.push(filteredData);
             localStorage.setItem('cadastros', JSON.stringify(cadastrosParse));
+            onCadastroSuccess()
         }
 
         reset({
