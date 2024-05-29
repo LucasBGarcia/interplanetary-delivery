@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { maskCepNumber, maskLoteNumber } from "utils/mask/mask"
 
-export const useTerra = () => {
+export const useCadastro = () => {
     const [ErroViaCep, setErroViaCep] = useState<string>('')
     const [ErroCoordenadas, setErroCoordenadas] = useState<string>('')
     const [LoadingCoordendas, setLoadingCoordendas] = useState<boolean>(false)

@@ -1,3 +1,3 @@
 export * from "./Navbar"
 export * from "./Button"
-export * from "./Terra"
+export * from "./Cadastro"
