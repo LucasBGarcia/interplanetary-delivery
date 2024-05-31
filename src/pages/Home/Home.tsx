@@ -1,6 +1,6 @@
 import { FormCadastro, Navbar } from "components";
 import { Cadastrados } from "components/Cadastrados";
-import planeta_terra from "../../utils/images/planeta_terra.jpg";
+import planeta_terra from "../../utils/images/planeta_terra.svg";
 import { useState } from "react";
 
 export function HomePage() {

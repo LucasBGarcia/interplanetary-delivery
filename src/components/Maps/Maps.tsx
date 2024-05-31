@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import martelocalizacao from '../../utils/images/martlocalizacao.webp';
+import martelocalizacao from '../../utils/images/martlocalizacao.svg';
 
 interface MapsProps {
   latitude: string | undefined;

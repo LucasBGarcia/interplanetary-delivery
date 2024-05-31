@@ -1,8 +1,8 @@
 import { FormProps } from "pages/Home/types";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import marte from "../../utils/images/marte.png";
-import terra from "../../utils/images/terra.png";
+import marte from "../../utils/images/marte.svg";
+import terra from "../../utils/images/terra.svg";
 
 export function Cadastrados({ atualizarListagem }: any) {
     const [enderecos, setEnderecos] = useState<FormProps[]>([])
