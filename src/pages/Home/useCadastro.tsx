@@ -2,7 +2,7 @@ import axios from "axios"
 import { AddressProps, FormProps } from "pages/Home/types"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { maskCepNumber, maskLoteNumber } from "utils/mask/mask"
+import { UpperCase, maskCepNumber, maskLoteNumber } from "utils/mask/mask"
 
 type CadastroSuccessCallback = () => void;
 
@@ -69,7 +69,10 @@ export const useCadastro = ({onCadastroSuccess}:Props) => {
 
     useEffect(() => {
         setValue('lote', maskLoteNumber(lote))
-    }, [lote])
+    }, [lote]) 
+       useEffect(() => {
+        setValue('pais', UpperCase(pais))
+    }, [pais])
 
     const apikey = 'AIzaSyDAJ40ypx302SUKYMrry1NYS6P3jWAo9P8'
     const BuscaCoordenadas = async (data: FormProps) => {
