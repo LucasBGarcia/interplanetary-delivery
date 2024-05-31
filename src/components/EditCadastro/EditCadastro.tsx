@@ -1,48 +1,27 @@
-import { useCadastro } from "pages/Home/useCadastro";
+import { FormProps, useEditCadastro } from "pages";
 import { useState } from "react";
-import { useForm } from "react-hook-form"
 
-type CadastroSuccessCallback = () => void;
-
-interface Props {
-    onCadastroSuccess: CadastroSuccessCallback; // Propriedade onCadastroSuccess do tipo CadastroSuccessCallback
-}
-
-export function FormCadastro({onCadastroSuccess}:Props) {
-    const [Terra, setTerra] = useState<boolean>(true)
-
-    // const { ErroViaCep, ErroCoordenadas, errors, onSubmit, register, handleSubmit, LoadingCoordendas } = useCadastro()
-    // const { errors, onSubmit, register, handleSubmit } = useMarte()
-
+export function EditCadastro({ dados }: { dados: FormProps | undefined }) {
     const {
         ErroViaCep,
         ErroCoordenadas,
         errors,
         onSubmit,
+        onDelete,
         register,
         handleSubmit,
         LoadingCoordendas
-    } = useCadastro({onCadastroSuccess});
-
+    } = useEditCadastro(dados);
 
     return (
-        <div className=" flex flex-col flex-1 p-4   border-gray-950 gap-3">
+        <div className=" flex flex-col flex-1 p-4  border-gray-950 gap-3">
             <div>
-                <p className="text-2xl font-bold">Cadastro de endereços</p>
+                <p className="text-2xl font-bold">Edição de endereço</p>
             </div>
-            <div className="flex mt-4 space-x-4">
-                <label className="flex items-center">
-                    <input type="radio" name="endereco" className="form-radio h-5 w-5 text-gray-600" checked={Terra} onChange={() => setTerra(true)} />
-                    <span className="ml-2  text-gray-700">Terra</span>
-                </label>
-                <label className="flex items-center ">
-                    <input type="radio" name="endereco" className="form-radio h-5 w-5 text-gray-600" onChange={() => setTerra(false)} />
-                    <span className="ml-2 text-gray-700">Marte</span>
-                </label>
-            </div>
+
             <div>
-                {Terra ?
-                    <div className="gap-4 grid grid-cols-2">
+                {!dados?.lote ?
+                    <div className="gap-4 grid grid-cols-2 ">
                         <div className="form-group">
                             <div className="flex flex-col">
                                 <label>País</label>
@@ -147,15 +126,23 @@ export function FormCadastro({onCadastroSuccess}:Props) {
                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                     ></path>
                                 </svg>
-                                Enviando...
+                                Editando...
                             </button>
                         ) : (
-                            <button
-                                className="py-2 px-4 rounded-md bg-primary font-bold text-white col-span-2"
-                                onClick={handleSubmit(onSubmit)}
-                            >
-                                Enviar
-                            </button>
+                            <>
+                                <button
+                                    className="py-2 px-4 rounded-md bg-blue-500 hover:bg-primary font-bold text-white col-span-1"
+                                    onClick={handleSubmit(onSubmit)}
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    className="py-2 px-4 rounded-md bg-red-500 hover:bg-red-600 font-bold text-white col-span-1"
+                                    onClick={onDelete}
+                                >
+                                    Deletar
+                                </button>
+                            </>
                         )}
                     </div>
                     :
@@ -192,15 +179,23 @@ export function FormCadastro({onCadastroSuccess}:Props) {
                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                     ></path>
                                 </svg>
-                                Enviando...
+                                Editando...
                             </button>
                         ) : (
-                            <button
-                                className="py-2 px-4 rounded-md bg-primary font-bold text-white col-span-2"
-                                onClick={handleSubmit(onSubmit)}
-                            >
-                                Enviar
-                            </button>
+                            <>
+                                <button
+                                    className="py-2 px-4 rounded-md bg-blue-500 hover:bg-primary font-bold text-white col-span-2"
+                                    onClick={handleSubmit(onSubmit)}
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    className="py-2 px-4 rounded-md bg-red-500 hover:bg-red-600 font-bold text-white col-span-2"
+                                    onClick={onDelete}
+                                >
+                                    Deletar
+                                </button>
+                            </>
                         )}
                     </div>
                 }

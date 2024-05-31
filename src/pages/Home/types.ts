@@ -8,7 +8,7 @@ export type AddressProps = {
 }
 
 
-export type TerraProps = {
+export type FormProps = {
     id?:number,
     cep?: string,
     cidade?: string,
@@ -22,9 +22,4 @@ export type TerraProps = {
     coordenadasY?:string,
     lote?: string
 
-}
-
-export type MarteProps = {
-    id?:number,
-    lote: string
 }
