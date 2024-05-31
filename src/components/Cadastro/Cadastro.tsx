@@ -10,10 +10,6 @@ interface Props {
 
 export function FormCadastro({ onCadastroSuccess }: Props) {
     const [Terra, setTerra] = useState<boolean>(true)
-
-    // const { ErroViaCep, ErroCoordenadas, errors, onSubmit, register, handleSubmit, LoadingCoordendas } = useCadastro()
-    // const { errors, onSubmit, register, handleSubmit } = useMarte()
-
     const {
         ErroViaCep,
         ErroCoordenadas,
@@ -23,7 +19,6 @@ export function FormCadastro({ onCadastroSuccess }: Props) {
         handleSubmit,
         LoadingCoordendas
     } = useCadastro({ onCadastroSuccess });
-
 
     return (
         <div className=" flex flex-col flex-1 p-4   border-gray-950 gap-3">
@@ -172,6 +167,8 @@ export function FormCadastro({ onCadastroSuccess }: Props) {
                                     {...register('lote', { required: true, maxLength: 4, minLength: 4 })}
                                 />
                                 {errors?.lote?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
+                                {errors?.lote?.type === 'minLength' && <p className="text-red-700">Mínimo 4 digitos</p>}
+                                {errors?.lote?.type === 'maxLength' && <p className="text-red-700">Máximo 4 digitos</p>}
 
                             </div>
                         </div>

@@ -68,7 +68,7 @@ export const useEditCadastro = (dados: FormProps | undefined) => {
         setValue('lote', maskLoteNumber(lote))
     }, [lote])
 
-    const apikey = 'AIzaSyDAJ40ypx302SUKYMrry1NYS6P3jWAo9P8'
+    const apikey = process.env.GOOGLE_MAPS_KEY || ''
     const BuscaCoordenadas = async (data: FormProps) => {
         setLoadingCoordendas(true)
         let EnderecoCompleto = `${data.logradouro}, ${data.numero}- ${data.bairro}, ${data.cidade}- ${data.estado}`;
