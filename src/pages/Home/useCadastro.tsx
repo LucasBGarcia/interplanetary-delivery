@@ -46,10 +46,8 @@ export const useCadastro = ({onCadastroSuccess}:Props) => {
     const BuscaEndereco = useCallback(async (cep: string) => {
         try {
             const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-            console.log(response)
             setData(response.data)
         } catch (error) {
-            console.log(error);
             setErroViaCep('Endereço não encontrado.');
         }
     }, []);
@@ -74,7 +72,8 @@ export const useCadastro = ({onCadastroSuccess}:Props) => {
         setValue('pais', UpperCase(pais))
     }, [pais])
 
-    const apikey = 'AIzaSyDAJ40ypx302SUKYMrry1NYS6P3jWAo9P8'
+   
+    const apikey ='AIzaSyDAJ40ypx302SUKYMrry1NYS6P3jWAo9P8'
     const BuscaCoordenadas = async (data: FormProps) => {
         setLoadingCoordendas(true)
         let EnderecoCompleto = `${data.logradouro}, ${data.numero}- ${data.bairro}, ${data.cidade}- ${data.estado}`;
@@ -143,8 +142,6 @@ export const useCadastro = ({onCadastroSuccess}:Props) => {
             pais: '',
             lote: ''
         });
-
-        console.log(cadastrosParse);
     };
     return {
         errors,
