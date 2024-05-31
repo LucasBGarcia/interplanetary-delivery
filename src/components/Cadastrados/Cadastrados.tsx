@@ -10,15 +10,12 @@ export function Cadastrados({ atualizarListagem }: any) {
         const response = localStorage.getItem('cadastros')
         if (response) {
             setEnderecos(JSON.parse(response))
-            console.log(JSON.parse(response))
         }
     }, [])
     useEffect(() => {
-        console.log(atualizarListagem)
         const response = localStorage.getItem('cadastros')
         if (response) {
             setEnderecos(JSON.parse(response))
-            console.log(JSON.parse(response))
         }
     }, [atualizarListagem])
 

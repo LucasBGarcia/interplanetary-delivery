@@ -147,7 +147,7 @@ export function EditCadastro({ dados }: { dados: FormProps | undefined }) {
                     </div>
                     :
                     <div className="gap-4 grid grid-cols-2">
-                        <div className="form-group">
+                        <div className="form-group col-span-2">
                             <div className="flex flex-col">
                                 <label>Número do Lote</label>
                                 <input
@@ -156,7 +156,8 @@ export function EditCadastro({ dados }: { dados: FormProps | undefined }) {
                                     {...register('lote', { required: true, maxLength: 4, minLength: 4 })}
                                 />
                                 {errors?.lote?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
-
+                                {errors?.lote?.type === 'minLength' && <p className="text-red-700">Mínimo 4 digitos</p>}
+                                {errors?.lote?.type === 'maxLength' && <p className="text-red-700">Máximo 4 digitos</p>}
                             </div>
                         </div>
                         {LoadingCoordendas ? (
@@ -183,19 +184,19 @@ export function EditCadastro({ dados }: { dados: FormProps | undefined }) {
                             </button>
                         ) : (
                             <>
-                                <button
-                                    className="py-2 px-4 rounded-md bg-blue-500 hover:bg-primary font-bold text-white col-span-2"
-                                    onClick={handleSubmit(onSubmit)}
-                                >
-                                    Editar
-                                </button>
-                                <button
-                                    className="py-2 px-4 rounded-md bg-red-500 hover:bg-red-600 font-bold text-white col-span-2"
-                                    onClick={onDelete}
-                                >
-                                    Deletar
-                                </button>
-                            </>
+                            <button
+                                className="py-2 px-4 rounded-md bg-blue-500 hover:bg-primary font-bold text-white col-span-1"
+                                onClick={handleSubmit(onSubmit)}
+                            >
+                                Editar
+                            </button>
+                            <button
+                                className="py-2 px-4 rounded-md bg-red-500 hover:bg-red-600 font-bold text-white col-span-1"
+                                onClick={onDelete}
+                            >
+                                Deletar
+                            </button>
+                        </>
                         )}
                     </div>
                 }
