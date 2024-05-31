@@ -18,7 +18,6 @@ export function Maps({ latitude, longitude, lote }: MapsProps) {
     lat: Number(latitude),
     lng: Number(longitude)
   };
-
   return (
     <div className="flex flex-1 p-4 border-gray-950 gap-3" style={{ height: '400px' }}>
       {isLoaded && !lote ? (

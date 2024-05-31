@@ -16,7 +16,7 @@ export const useEditCadastro = (dados: FormProps | undefined) => {
         handleSubmit,
         watch,
         setValue,
-                reset,
+        reset,
         formState: { errors }
     } = useForm(({
         defaultValues: {
@@ -43,10 +43,8 @@ export const useEditCadastro = (dados: FormProps | undefined) => {
     const BuscaEndereco = useCallback(async (cep: string) => {
         try {
             const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-            console.log(response)
             setData(response.data)
         } catch (error) {
-            console.log(error);
             setErroViaCep('Endereço não encontrado.');
         }
     }, []);
@@ -99,6 +97,7 @@ export const useEditCadastro = (dados: FormProps | undefined) => {
 
     const onSubmit = async (data: FormProps) => {
         const filteredData = removeEmptyProperties(data);
+        filteredData.id = dados?.id
         const cadastros = localStorage.getItem('cadastros');
         let cadastrosParse: FormProps[] = cadastros ? JSON.parse(cadastros) : [];
         if (filteredData.cep) {
@@ -126,21 +125,19 @@ export const useEditCadastro = (dados: FormProps | undefined) => {
             lote: ''
         });
 
-        console.log(cadastrosParse);
     };
-   
-   
+
+
     const onDelete = async () => {
         const cadastros = localStorage.getItem('cadastros');
         let cadastrosParse: FormProps[] = cadastros ? JSON.parse(cadastros) : [];
-       
+
         if (cadastros) {
             const updatedCadastros = cadastrosParse.filter(cadastro => cadastro.id !== dados?.id);
             cadastrosParse = updatedCadastros
             localStorage.setItem('cadastros', JSON.stringify(cadastrosParse));
             navigate('/')
         }
-
         reset({
             cep: '',
             cidade: '',
@@ -152,8 +149,6 @@ export const useEditCadastro = (dados: FormProps | undefined) => {
             pais: '',
             lote: ''
         });
-
-        console.log(cadastrosParse);
     };
     return {
         errors,

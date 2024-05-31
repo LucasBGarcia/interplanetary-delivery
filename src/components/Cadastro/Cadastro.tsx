@@ -8,12 +8,8 @@ interface Props {
     onCadastroSuccess: CadastroSuccessCallback; // Propriedade onCadastroSuccess do tipo CadastroSuccessCallback
 }
 
-export function FormCadastro({onCadastroSuccess}:Props) {
+export function FormCadastro({ onCadastroSuccess }: Props) {
     const [Terra, setTerra] = useState<boolean>(true)
-
-    // const { ErroViaCep, ErroCoordenadas, errors, onSubmit, register, handleSubmit, LoadingCoordendas } = useCadastro()
-    // const { errors, onSubmit, register, handleSubmit } = useMarte()
-
     const {
         ErroViaCep,
         ErroCoordenadas,
@@ -22,8 +18,7 @@ export function FormCadastro({onCadastroSuccess}:Props) {
         register,
         handleSubmit,
         LoadingCoordendas
-    } = useCadastro({onCadastroSuccess});
-
+    } = useCadastro({ onCadastroSuccess });
 
     return (
         <div className=" flex flex-col flex-1 p-4   border-gray-950 gap-3">
@@ -67,19 +62,20 @@ export function FormCadastro({onCadastroSuccess}:Props) {
 
                             </div>
                         </div>
-
                         <div className="form-group">
                             <div className="flex flex-col">
-                                <label>Estado</label>
+                                <label>Número</label>
                                 <input
                                     type="text"
                                     className="border-black border-2 rounded-md w-full pl-2"
-                                    {...register('estado', { required: true })}
+                                    {...register('numero', { required: true })}
                                 />
-                                {errors?.estado?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
+                                {errors?.numero?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
 
                             </div>
                         </div>
+
+
                         <div className="form-group">
                             <div className="flex flex-col">
                                 <label>Cidade</label>
@@ -91,6 +87,7 @@ export function FormCadastro({onCadastroSuccess}:Props) {
                                 {errors?.cidade?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
                             </div>
                         </div>
+
                         <div className="form-group">
                             <div className="flex flex-col">
                                 <label>Logradouro</label>
@@ -105,16 +102,17 @@ export function FormCadastro({onCadastroSuccess}:Props) {
                         </div>
                         <div className="form-group">
                             <div className="flex flex-col">
-                                <label>Número</label>
+                                <label>Estado</label>
                                 <input
                                     type="text"
                                     className="border-black border-2 rounded-md w-full pl-2"
-                                    {...register('numero', { required: true })}
+                                    {...register('estado', { required: true })}
                                 />
-                                {errors?.numero?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
+                                {errors?.estado?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
 
                             </div>
                         </div>
+
                         <div className="form-group col-span-2">
                             <div className="flex flex-col">
                                 <label>Complemento</label>
@@ -169,6 +167,8 @@ export function FormCadastro({onCadastroSuccess}:Props) {
                                     {...register('lote', { required: true, maxLength: 4, minLength: 4 })}
                                 />
                                 {errors?.lote?.type === 'required' && <p className="text-red-700">Campo obrigatório</p>}
+                                {errors?.lote?.type === 'minLength' && <p className="text-red-700">Mínimo 4 digitos</p>}
+                                {errors?.lote?.type === 'maxLength' && <p className="text-red-700">Máximo 4 digitos</p>}
 
                             </div>
                         </div>
