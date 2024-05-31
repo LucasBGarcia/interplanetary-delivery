@@ -1,11 +1,9 @@
-import { Navbar } from 'Components';
+import { Navbar } from 'components';
 import './App.css';
+import { AppRoutes } from 'routes';
 
 export default function App() {
   return (
-    <div className="bg-sky-500">
-      <Navbar />
-      teste
-    </div>
-  );
+    <AppRoutes/>
+  )
 }
