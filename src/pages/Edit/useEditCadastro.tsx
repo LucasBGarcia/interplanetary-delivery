@@ -12,12 +12,11 @@ export const useEditCadastro = (dados: FormProps | undefined) => {
     const [ErroViaCep, setErroViaCep] = useState<string>('')
     const [ErroCoordenadas, setErroCoordenadas] = useState<string>('')
     const [LoadingCoordendas, setLoadingCoordendas] = useState<boolean>(false)
-    console.log("DADOS", dados)
     const { register,
         handleSubmit,
         watch,
         setValue,
-        reset,
+                reset,
         formState: { errors }
     } = useForm(({
         defaultValues: {
@@ -129,12 +128,40 @@ export const useEditCadastro = (dados: FormProps | undefined) => {
 
         console.log(cadastrosParse);
     };
+   
+   
+    const onDelete = async () => {
+        const cadastros = localStorage.getItem('cadastros');
+        let cadastrosParse: FormProps[] = cadastros ? JSON.parse(cadastros) : [];
+       
+        if (cadastros) {
+            const updatedCadastros = cadastrosParse.filter(cadastro => cadastro.id !== dados?.id);
+            cadastrosParse = updatedCadastros
+            localStorage.setItem('cadastros', JSON.stringify(cadastrosParse));
+            navigate('/')
+        }
+
+        reset({
+            cep: '',
+            cidade: '',
+            estado: '',
+            logradouro: '',
+            numero: '',
+            bairro: '',
+            complemento: '',
+            pais: '',
+            lote: ''
+        });
+
+        console.log(cadastrosParse);
+    };
     return {
         errors,
         ErroViaCep,
         ErroCoordenadas,
         register,
         onSubmit,
+        onDelete,
         handleSubmit,
         LoadingCoordendas
     }

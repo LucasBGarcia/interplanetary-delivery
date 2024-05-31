@@ -1,4 +1,4 @@
-import { FormCadastro, Navbar } from "components";
+import { BackButton, FormCadastro, Navbar } from "components";
 import { Cadastrados } from "components/Cadastrados";
 import planeta_terra from "../../utils/images/planeta_terra.jpg";
 import { useEffect, useState } from "react";
@@ -29,8 +29,6 @@ export function Edit() {
         }
     }, [])
 
-
-
     return (
         <div className="h-screen">
             <Navbar />
@@ -42,6 +40,8 @@ export function Edit() {
                 />
             </div>
             <div className="container mx-auto  p-4">
+
+                <BackButton/>
                 <div className="flex flex-col md:flex-row gap-3">
                     {Carregando ?
                         <div className=" flex flex-col flex-1 p-4 items-center justify-center rounded-md border-gray-950 gap-3">
@@ -63,9 +63,9 @@ export function Edit() {
                             <span className="text-black">carregando maps...</span>
                         </div>
                         :
-                        <Maps latitude={EnderecoEdit?.coordenadasX} longitude={EnderecoEdit?.coordenadasY} />
+                        <Maps latitude={EnderecoEdit?.coordenadasX} longitude={EnderecoEdit?.coordenadasY} lote={EnderecoEdit?.lote}/>
 
-}
+                    }
                 </div>
             </div>
         </div>

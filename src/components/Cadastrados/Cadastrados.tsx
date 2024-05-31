@@ -1,12 +1,10 @@
 import { FormProps } from "pages/Home/types";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import marte from "../../utils/images/marte.png";
 import terra from "../../utils/images/terra.png";
-import { Link } from "react-router-dom";
 
 export function Cadastrados({ atualizarListagem }: any) {
-    console.log(atualizarListagem)
-
     const [enderecos, setEnderecos] = useState<FormProps[]>([])
     useEffect(() => {
         const response = localStorage.getItem('cadastros')
@@ -26,10 +24,10 @@ export function Cadastrados({ atualizarListagem }: any) {
 
 
     return (
-        <div className="flex flex-1 p-4items-center justify-center rounded-md border-gray-950 ">
+        <div className="flex flex-1 p-4 items-center justify-center  border-gray-950 ">
             {enderecos.length > 0 ?
                 <>
-                    <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <div className=" max-h-96 overflow-y-auto w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                         <div className="flex items-centermb-4">
                             <h5 className="text-2xl font-bold leading-none text-gray-900 dark:text-white">Endereços cadastrados</h5>
                         </div>

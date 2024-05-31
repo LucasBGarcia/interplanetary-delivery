@@ -26,7 +26,7 @@ export function FormCadastro({onCadastroSuccess}:Props) {
 
 
     return (
-        <div className=" flex flex-col flex-1 p-4  rounded-md border-gray-950 gap-3">
+        <div className=" flex flex-col flex-1 p-4   border-gray-950 gap-3">
             <div>
                 <p className="text-2xl font-bold">Cadastro de endereços</p>
             </div>

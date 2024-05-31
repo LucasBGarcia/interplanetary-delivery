@@ -7,20 +7,21 @@ export function EditCadastro({ dados }: { dados: FormProps | undefined }) {
         ErroCoordenadas,
         errors,
         onSubmit,
+        onDelete,
         register,
         handleSubmit,
         LoadingCoordendas
     } = useEditCadastro(dados);
 
     return (
-        <div className=" flex flex-col flex-1 p-4  rounded-md border-gray-950 gap-3">
+        <div className=" flex flex-col flex-1 p-4  border-gray-950 gap-3">
             <div>
                 <p className="text-2xl font-bold">Edição de endereço</p>
             </div>
-            
+
             <div>
                 {!dados?.lote ?
-                    <div className="gap-4 grid grid-cols-2">
+                    <div className="gap-4 grid grid-cols-2 ">
                         <div className="form-group">
                             <div className="flex flex-col">
                                 <label>País</label>
@@ -125,15 +126,23 @@ export function EditCadastro({ dados }: { dados: FormProps | undefined }) {
                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                     ></path>
                                 </svg>
-                                Enviando...
+                                Editando...
                             </button>
                         ) : (
-                            <button
-                                className="py-2 px-4 rounded-md bg-primary font-bold text-white col-span-2"
-                                onClick={handleSubmit(onSubmit)}
-                            >
-                                Enviar
-                            </button>
+                            <>
+                                <button
+                                    className="py-2 px-4 rounded-md bg-blue-500 hover:bg-primary font-bold text-white col-span-1"
+                                    onClick={handleSubmit(onSubmit)}
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    className="py-2 px-4 rounded-md bg-red-500 hover:bg-red-600 font-bold text-white col-span-1"
+                                    onClick={onDelete}
+                                >
+                                    Deletar
+                                </button>
+                            </>
                         )}
                     </div>
                     :
@@ -170,15 +179,23 @@ export function EditCadastro({ dados }: { dados: FormProps | undefined }) {
                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                     ></path>
                                 </svg>
-                                Enviando...
+                                Editando...
                             </button>
                         ) : (
-                            <button
-                                className="py-2 px-4 rounded-md bg-primary font-bold text-white col-span-2"
-                                onClick={handleSubmit(onSubmit)}
-                            >
-                                Enviar
-                            </button>
+                            <>
+                                <button
+                                    className="py-2 px-4 rounded-md bg-blue-500 hover:bg-primary font-bold text-white col-span-2"
+                                    onClick={handleSubmit(onSubmit)}
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    className="py-2 px-4 rounded-md bg-red-500 hover:bg-red-600 font-bold text-white col-span-2"
+                                    onClick={onDelete}
+                                >
+                                    Deletar
+                                </button>
+                            </>
                         )}
                     </div>
                 }
